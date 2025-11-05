@@ -1,13 +1,40 @@
 package com.devcalc;
 
-/**
- * Hello world!
- *
- */
-public class App 
-{
-    public static void main( String[] args )
-    {
-        System.out.println( "Hello World!" );
+
+import io.javalin.Javalin;
+
+public class App {
+    public static void main(String[] args) {
+        CalculatorService service = new CalculatorService();
+
+        Javalin app = Javalin.create(config -> {}).start(7000);
+
+        app.get("/add", ctx -> {
+            double a = Double.parseDouble(ctx.queryParam("a"));
+            double b = Double.parseDouble(ctx.queryParam("b"));
+            ctx.result(String.valueOf(service.add(a, b)));
+        });
+
+        app.get("/subtract", ctx -> {
+            double a = Double.parseDouble(ctx.queryParam("a"));
+            double b = Double.parseDouble(ctx.queryParam("b"));
+            ctx.result(String.valueOf(service.subtract(a, b)));
+        });
+
+        app.get("/multiply", ctx -> {
+            double a = Double.parseDouble(ctx.queryParam("a"));
+            double b = Double.parseDouble(ctx.queryParam("b"));
+            ctx.result(String.valueOf(service.multiply(a, b)));
+        });
+
+        app.get("/divide", ctx -> {
+            double a = Double.parseDouble(ctx.queryParam("a"));
+            double b = Double.parseDouble(ctx.queryParam("b"));
+            try {
+                ctx.result(String.valueOf(service.divide(a, b)));
+            } catch (IllegalArgumentException e) {
+                ctx.status(400).result(e.getMessage());
+            }
+        });
     }
 }
