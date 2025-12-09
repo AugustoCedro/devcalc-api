@@ -1,0 +1,42 @@
+name: Deploy Workflow
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      DEV_ENV: dev
+      STAGING_ENV: staging
+      PROD_ENV: prod
+      DEPLOY_ENV: ${{ secrets.DEPLOY_ENV }}
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v3
+
+      - name: Exibir ambiente de deploy
+        run: |
+          echo "Ambiente de deploy ativo: $DEPLOY_ENV"
+
+      - name: Configurar credenciais
+        run: |
+          echo "Credenciais configuradas com sucesso"
+        env:
+          API_USER: ${{ secrets.API_USER }}
+          API_PASSWORD: ${{ secrets.API_PASSWORD }}
+
+      - name: Executar deploy conforme ambiente
+        run: |
+          if [ "$DEPLOY_ENV" = "$DEV_ENV" ]; then
+            echo "Deploy em desenvolvimento concluído"
+          elif [ "$DEPLOY_ENV" = "$STAGING_ENV" ]; then
+            echo "Deploy em staging concluído"
+          elif [ "$DEPLOY_ENV" = "$PROD_ENV" ]; then
+            echo "Deploy em produção concluído"
+          else
+            echo "Ambiente desconhecido"
+            exit 1
+          fi
