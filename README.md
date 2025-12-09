@@ -1,5 +1,6 @@
 # devcalc-api
-
+---
+[![Hello Workflow](https://github.com/AugustoCedro/devcalc-api/actions/workflows/hello.yml/badge.svg)](https://github.com/AugustoCedro/devcalc-api/actions/workflows/hello.yml)
 ---
 ## Descrição
 O **DevCalc API** é um projeto desenvolvido em **Java** que disponibiliza uma API REST para realizar **operações matemáticas simples**, como adição, subtração, multiplicação e divisão.
