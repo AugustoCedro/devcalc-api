@@ -1,5 +1,6 @@
 package com.devcalc;
 
+import com.devcalc.service.CalculatorService;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -32,4 +33,10 @@ public class CalculatorServiceTest {
     void testDivideByZero() {
         assertThrows(ArithmeticException.class, () -> service.divide(10, 0));
     }
+
+//    @Test
+//    void testDivideByZeroFail(){
+//        assertDoesNotThrow(ArithmeticException.class, () -> service.divide(10, 0));
+//    }
+
 }
