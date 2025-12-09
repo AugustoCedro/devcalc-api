@@ -1,4 +1,4 @@
-package com.devcalc;
+package com.devcalc.service;
 
 public class CalculatorService {
 

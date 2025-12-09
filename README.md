@@ -14,6 +14,20 @@ A API será utilizada para validar conceitos de integração contínua, entrega 
 - **Javalin** (para construção da API REST)
 - **Maven** (como ferramenta de build)
 - **JUnit 5** (para testes automatizados)
+- **Docker & Docker Hub**
+- **Docker Compose**
+- **GitHub Actions**
+---
+## Estrutura do Projeto
+    devcalc/
+        └── src/
+        ├── main/
+        │   └── java/com/devcalc/
+        │          ├── App.java
+        │          └── service/CalculatorService.java
+        └── test/
+            └── java/com/devcalc/
+                └── CalculatorServiceTest.java
 ---
 ## Como Executar o Projeto Localmente
 
@@ -29,13 +43,10 @@ A API será utilizada para validar conceitos de integração contínua, entrega 
    ```bash
    git clone https://github.com/AugustoCedro/devcalc-api.git
    cd devcalc-api
-2. **Compilar o projeto:**
+2. **Executar a aplicação:**
     ```bash
-    mvn clean install
-3. **Executar a aplicação:**
-    
+    mvn clean package
+    java -jar target/devcalc-api.jar
+3. **Rodar Testes:**
     ```bash
-    mvn spring-boot:run
-4. **Acessar a API:**
-    ```bash
-    http://localhost:7000
+    mvn test
