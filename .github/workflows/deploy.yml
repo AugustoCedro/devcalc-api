@@ -1,9 +1,17 @@
 name: Deploy Workflow
 
 on:
-  push:
-    branches:
-      - master
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Selecione o ambiente de deploy'
+        required: true
+        default: staging
+        type: choice
+        options:
+          - dev
+          - staging
+          - prod
 
 jobs:
   deploy:
@@ -12,21 +20,14 @@ jobs:
       DEV_ENV: dev
       STAGING_ENV: staging
       PROD_ENV: prod
-      DEPLOY_ENV: ${{ secrets.DEPLOY_ENV }}
+      DEPLOY_ENV: ${{ github.event.inputs.environment }}
     steps:
       - name: Checkout do código
         uses: actions/checkout@v3
 
-      - name: Exibir ambiente de deploy
+      - name: Exibir ambiente selecionado
         run: |
           echo "Ambiente de deploy ativo: $DEPLOY_ENV"
-
-      - name: Configurar credenciais
-        run: |
-          echo "Credenciais configuradas com sucesso"
-        env:
-          API_USER: ${{ secrets.API_USER }}
-          API_PASSWORD: ${{ secrets.API_PASSWORD }}
 
       - name: Executar deploy conforme ambiente
         run: |
