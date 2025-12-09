@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: tp2-pod
+  namespace: tp2
+spec:
+  containers:
+
+    - name: nginx
+      image: nginx:1.29.3-alpine-slim
+      ports:
+        - containerPort: 80
+
+    - name: busybox
+      image: busybox
+      env:
+        - name: USER
+          value: "root"
+        - name: PASSWORD
+          value: "123456"
+      command: ["/bin/sh", "-c"]
+      args:
+        - |
+          # loop infinito: a cada 10s imprime hora e conteúdo da página do nginx (localhost:80)
+          while true; do
+            echo "----------------------------------------"
+            echo "Hora atual: $(date)"
+            echo "Env vars: USER=$USER PASSWORD=$PASSWORD"
+            echo "Requisição ao NGINX (localhost:80):"
+            # tentar buscar a página inicial do nginx; se falhar, imprime 'Falhou'
+            if wget -qO- http://localhost:80 2>/dev/null | sed -n '1,6p'; then
+              echo "-> (acesso OK)"
+            else
+              echo "-> Falhou ao acessar localhost:80"
+            fi
+            sleep 10
+          done

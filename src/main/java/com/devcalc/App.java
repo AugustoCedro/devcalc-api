@@ -37,5 +37,7 @@ public class App {
                 ctx.status(400).result(e.getMessage());
             }
         });
+
+        app.get("/health", ctx -> ctx.result("OK"));
     }
 }
